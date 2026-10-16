@@ -1,18 +1,15 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindSpace</title>
+
     <style>
         :root {
-            --bg-primary: #363636;
-            --bg-secondary: #bebdb8;
-            --text-primary: #f0eee8;
-            --text-secondary: #d30000;
-            --accent: #f0eee8;
-            --accent-hover: #3b5bdb;
-            --border: #dee2e6;
+            --dark: #363636;
+            --light: #F0EEE8;
             --sidebar-width: 260px;
         }
 
@@ -20,85 +17,81 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
             display: flex;
-            height: 100vh;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            overflow: hidden;
+            min-height: 100vh;
+            background-color: var(--dark);
+            color: var(--light);
         }
 
-        /* Sidebar Navigation */
+        /* Sidebar */
         aside {
             width: var(--sidebar-width);
-            background-color: var(--bg-secondary);
-            border-right: 1px solid var(--border);
+            flex-shrink: 0;
+            background-color: var(--light);
+            color: var(--dark);
+            border-right: 1px solid var(--dark);
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            padding: 20px;
+            padding: 28px 20px;
         }
 
         .brand h2 {
-            font-size: 1.5rem;
-            margin-bottom: 5px;
-            color: var(--accent);
+            font-size: 1.6rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            color: var(--dark);
         }
 
         .brand p {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            margin-bottom: 30px;
+            font-size: 0.85rem;
+            color: var(--dark);
+            margin-bottom: 35px;
         }
 
         .nav-links {
             list-style: none;
-            flex-grow: 1;
         }
 
         .nav-item {
-            padding: 12px 15px;
+            padding: 14px 15px;
             border-radius: 8px;
             cursor: pointer;
             margin-bottom: 8px;
             font-weight: 500;
-            display: flex;
-            flex-direction: column;
-            transition: background-color 0.2s ease, color 0.2s ease;
+            color: var(--dark);
+            border: 1px solid transparent;
+            transition: background-color 0.2s ease,
+                        color 0.2s ease;
         }
 
         .nav-item span {
             font-size: 1rem;
         }
 
-        .nav-item small {
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-top: 2px;
+        .nav-item:hover,
+        .nav-item.active {
+            background-color: var(--dark);
+            color: var(--light);
+            border-color: var(--dark);
         }
 
-        .nav-item:hover, .nav-item.active {
-            background-color: var(--bg-primary);
-            color: var(--accent);
-            border-left: 4px solid var(--accent);
-        }
-
-        /* Main Content Workspace */
+        /* Main workspace */
         main {
-            flex-grow: 1;
-            padding: 40px;
+            flex: 1;
+            min-width: 0;
+            padding: 48px;
             overflow-y: auto;
-            display: flex;
-            flex-direction: column;
         }
 
         .view {
             display: none;
-            height: 100%;
             flex-direction: column;
+            min-height: 100%;
         }
 
         .view.active {
@@ -106,52 +99,79 @@
         }
 
         h1 {
-            margin-bottom: 10px;
+            font-size: 2rem;
+            letter-spacing: -0.8px;
+            margin-bottom: 12px;
         }
 
         .subtitle {
-            color: var(--text-secondary);
-            margin-bottom: 30px;
+            color: var(--light);
+            opacity: 0.8;
+            line-height: 1.6;
+            margin-bottom: 32px;
         }
 
-        /* Todo Module Elements */
+        /* Todo input */
         .todo-input-container {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
-        input[type="text"], textarea {
+        input[type="text"],
+        textarea {
             width: 100%;
-            padding: 12px;
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
+            padding: 14px;
+            background-color: var(--light);
+            border: 1px solid var(--light);
+            color: var(--dark);
             border-radius: 8px;
             font-size: 1rem;
             outline: none;
         }
 
-        input[type="text"]:focus, textarea:focus {
-            border-color: var(--accent);
+        input[type="text"]::placeholder,
+        textarea::placeholder {
+            color: var(--dark);
+            opacity: 0.7;
         }
 
-        button.btn-primary {
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 0 20px;
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: var(--light);
+            box-shadow: 0 0 0 2px var(--light);
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .btn-primary {
+            background-color: var(--light);
+            color: var(--dark);
+            border: 1px solid var(--light);
+            padding: 0 22px;
             border-radius: 8px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
             white-space: nowrap;
-            transition: background-color 0.2s ease;
+            transition: background-color 0.2s ease,
+                        color 0.2s ease;
         }
 
-        button.btn-primary:hover {
-            background-color: var(--accent-hover);
+        .btn-primary:hover {
+            background-color: var(--dark);
+            color: var(--light);
         }
 
+        .btn-primary:focus-visible,
+        .btn-icon:focus-visible,
+        .nav-item:focus-visible {
+            outline: 2px solid var(--light);
+            outline-offset: 3px;
+        }
+
+        /* Todo list */
         .todo-list {
             list-style: none;
         }
@@ -160,179 +180,384 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px;
-            background-color: var(--bg-secondary);
-            border: 1px solid var(--border);
+            gap: 14px;
+            padding: 14px 16px;
+            background-color: var(--light);
+            color: var(--dark);
+            border: 1px solid var(--light);
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .todo-item span {
+            flex: 1;
+            line-height: 1.5;
         }
 
         .todo-item.completed span {
             text-decoration: line-through;
-            color: var(--text-secondary);
+            opacity: 0.65;
         }
 
         .todo-actions {
             display: flex;
-            gap: 10px;
+            align-items: center;
+            gap: 12px;
         }
 
         .btn-icon {
-            background: none;
+            background: transparent;
             border: none;
-            color: var(--text-secondary);
+            color: var(--dark);
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            padding: 4px;
+            border-radius: 4px;
         }
 
         .btn-icon:hover {
-            color: var(--accent);
+            opacity: 0.65;
         }
 
-        /* Notes Module Elements */
+        /* Notes */
         .notes-area {
-            flex-grow: 1;
-            resize: none;
+            flex: 1;
+            min-height: 300px;
+            resize: vertical;
+            line-height: 1.8;
+        }
+
+        /* Empty state */
+        .empty-state {
+            color: var(--light);
+            opacity: 0.75;
+            padding: 24px 0;
             line-height: 1.6;
+        }
+
+        /* Responsive layout */
+        @media (max-width: 700px) {
+            body {
+                flex-direction: column;
+            }
+
+            aside {
+                width: 100%;
+                padding: 18px 20px;
+                border-right: none;
+                border-bottom: 1px solid var(--dark);
+            }
+
+            .brand h2 {
+                margin-bottom: 16px;
+            }
+
+            .brand p {
+                margin-bottom: 16px;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 10px;
+            }
+
+            .nav-item {
+                flex: 1;
+                text-align: center;
+                margin-bottom: 0;
+            }
+
+            main {
+                padding: 28px 20px;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            .todo-input-container {
+                flex-direction: column;
+            }
+
+            .btn-primary {
+                min-height: 46px;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <!-- Sidebar Navigation -->
+    <!-- Sidebar navigation -->
     <aside>
         <div class="brand">
             <h2>MindSpace</h2>
-            <ul class="nav-links">
-                <li class="nav-item active" onclick="switchView('todo')">
-                    <span>Todo</span>
-                </li>
-                <li class="nav-item" onclick="switchView('notes')">
-                    <span>Notes</span>
-                </li>
-            </ul>
+            <p>A little space to think.</p>
+
+            <nav aria-label="Main navigation">
+                <ul class="nav-links">
+                    <li>
+                        <button
+                            type="button"
+                            class="nav-item active"
+                            data-view="todo"
+                            aria-current="page"
+                            style="width: 100%; text-align: left;"
+                        >
+                            <span>Todo</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            type="button"
+                            class="nav-item"
+                            data-view="notes"
+                            style="width: 100%; text-align: left;"
+                        >
+                            <span>Notes</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </div>
     </aside>
 
-    <!-- Main Content Workspace -->
+    <!-- Main workspace -->
     <main>
-        <!-- Todo Workspace -->
-        <div id="todo-view" class="view active">
+        <!-- Todo view -->
+        <section id="todo-view" class="view active">
             <h1>To Do</h1>
-            <p class="subtitle">Externalise your mental clutter. Keep it out of your head.</p>
-            
-            <div class="todo-input-container">
-                <input type="text" id="todo-input" placeholder="What's taking up your mental space?">
-                <button class="btn-primary" onclick="addTodo()">Capture</button>
-            </div>
+            <p class="subtitle">
+                Externalise your mental clutter. Keep it out of your head.
+            </p>
+
+            <form id="todo-form" class="todo-input-container">
+                <input
+                    type="text"
+                    id="todo-input"
+                    placeholder="What's taking up your mental space?"
+                    aria-label="New task"
+                    maxlength="500"
+                    autocomplete="off"
+                >
+                <button type="submit" class="btn-primary">
+                    Capture
+                </button>
+            </form>
 
             <ul class="todo-list" id="todo-list"></ul>
-        </div>
+            <p id="empty-state" class="empty-state">
+                Nothing on your mind? Enjoy the space.
+            </p>
+        </section>
 
-        <!-- Notes Workspace -->
-        <div id="notes-view" class="view">
+        <!-- Notes view -->
+        <section id="notes-view" class="view">
             <h1>Notes</h1>
-            <p class="subtitle">A friction-free canvas for raw processing and loose thinking.</p>
-            <textarea id="notes-input" class="notes-area" placeholder="Start rambling here... Everything you write is instantly preserved." oninput="saveNotes()"></textarea>
-        </div>
+            <p class="subtitle">
+                A friction-free canvas for raw processing and loose thinking.
+            </p>
+
+            <textarea
+                id="notes-input"
+                class="notes-area"
+                placeholder="Start rambling here... Everything you write is instantly preserved."
+                aria-label="Your notes"
+            ></textarea>
+        </section>
     </main>
 
     <script>
-        // --- State Management & Persistence ---
+        // State and persistence
+        const STORAGE_KEY = "mindspace_data_clean";
+
         let appState = {
             todos: [],
-            notes: ''
+            notes: ""
         };
 
-        // Load data on startup
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedData = localStorage.getItem('mindspace_data_clean');
-            if (savedData) {
-                appState = JSON.parse(savedData);
+        function loadState() {
+            try {
+                const savedData = localStorage.getItem(STORAGE_KEY);
+
+                if (savedData) {
+                    const parsed = JSON.parse(savedData);
+
+                    appState = {
+                        todos: Array.isArray(parsed.todos)
+                            ? parsed.todos.filter(todo =>
+                                todo &&
+                                typeof todo.text === "string" &&
+                                typeof todo.id === "number"
+                            )
+                            : [],
+                        notes: typeof parsed.notes === "string"
+                            ? parsed.notes
+                            : ""
+                    };
+                }
+            } catch (error) {
+                console.warn("Could not load MindSpace data.", error);
             }
-            renderTodos();
-            document.getElementById('notes-input').value = appState.notes || '';
-        });
+        }
 
         function saveState() {
-            localStorage.setItem('mindspace_data_clean', JSON.stringify(appState));
+            try {
+                localStorage.setItem(
+                    STORAGE_KEY,
+                    JSON.stringify(appState)
+                );
+            } catch (error) {
+                console.warn("Could not save MindSpace data.", error);
+            }
         }
 
-        // --- Navigation Engine ---
+        // Navigation
         function switchView(viewName) {
-            document.querySelectorAll('.view').forEach(view => view.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            document.querySelectorAll(".view").forEach(view => {
+                view.classList.toggle(
+                    "active",
+                    view.id === `${viewName}-view`
+                );
+            });
 
-            document.getElementById(`${viewName}-view`).classList.add('active');
-            
-            // Highlight active nav element
-            const index = viewName === 'todo' ? 0 : 1;
-            document.querySelectorAll('.nav-item')[index].classList.add('active');
-        }
+            document.querySelectorAll(".nav-item").forEach(item => {
+                const isActive = item.dataset.view === viewName;
 
-        // --- Todo Engine ---
-        function addTodo() {
-            const input = document.getElementById('todo-input');
-            const text = input.value.trim();
-            if (!text) return;
+                item.classList.toggle("active", isActive);
 
-            const newTodo = {
-                id: Date.now(),
-                text: text,
-                completed: false
-            };
-
-            appState.todos.push(newTodo);
-            input.value = '';
-            renderTodos();
-            saveState();
-        }
-
-        function toggleTodo(id) {
-            appState.todos = appState.todos.map(todo => 
-                todo.id === id ? { ...todo, completed: !todo.completed } : todo
-            );
-            renderTodos();
-            saveState();
-        }
-
-        function deleteTodo(id) {
-            appState.todos = appState.todos.filter(todo => todo.id !== id);
-            renderTodos();
-            saveState();
-        }
-
-        function renderTodos() {
-            const list = document.getElementById('todo-list');
-            list.innerHTML = '';
-
-            appState.todos.forEach(todo => {
-                const li = document.createElement('li');
-                li.className = `todo-item ${todo.completed ? 'completed' : ''}`;
-                
-                li.innerHTML = `
-                    <span>${todo.text}</span>
-                    <div class="todo-actions">
-                        <button class="btn-icon" onclick="toggleTodo(${todo.id})">${todo.completed ? '↩️' : '✅'}</button>
-                        <button class="btn-icon" onclick="deleteTodo(${todo.id})">🗑️</button>
-                    </div>
-                `;
-                list.appendChild(li);
+                if (isActive) {
+                    item.setAttribute("aria-current", "page");
+                } else {
+                    item.removeAttribute("aria-current");
+                }
             });
         }
 
-        // --- Notes Engine ---
-        function saveNotes() {
-            appState.notes = document.getElementById('notes-input').value;
+        document.querySelectorAll(".nav-item").forEach(item => {
+            item.addEventListener("click", () => {
+                switchView(item.dataset.view);
+            });
+        });
+
+        // Todo functions
+        function addTodo(text) {
+            const trimmedText = text.trim();
+
+            if (!trimmedText) return;
+
+            appState.todos.push({
+                id: Date.now(),
+                text: trimmedText,
+                completed: false
+            });
+
             saveState();
+            renderTodos();
         }
 
-        // Form submission intercept for enter key on input
-        document.getElementById('todo-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                addTodo();
+        function toggleTodo(id) {
+            appState.todos = appState.todos.map(todo =>
+                todo.id === id
+                    ? { ...todo, completed: !todo.completed }
+                    : todo
+            );
+
+            saveState();
+            renderTodos();
+        }
+
+        function deleteTodo(id) {
+            appState.todos = appState.todos.filter(
+                todo => todo.id !== id
+            );
+
+            saveState();
+            renderTodos();
+        }
+
+        function renderTodos() {
+            const list = document.getElementById("todo-list");
+            const emptyState = document.getElementById("empty-state");
+
+            list.replaceChildren();
+
+            appState.todos.forEach(todo => {
+                const li = document.createElement("li");
+                li.className = "todo-item";
+
+                if (todo.completed) {
+                    li.classList.add("completed");
+                }
+
+                const text = document.createElement("span");
+                text.textContent = todo.text;
+
+                const actions = document.createElement("div");
+                actions.className = "todo-actions";
+
+                const toggleButton = document.createElement("button");
+                toggleButton.type = "button";
+                toggleButton.className = "btn-icon";
+                toggleButton.textContent = todo.completed ? "↩" : "✓";
+                toggleButton.setAttribute(
+                    "aria-label",
+                    todo.completed
+                        ? `Mark ${todo.text} incomplete`
+                        : `Complete ${todo.text}`
+                );
+                toggleButton.addEventListener("click", () => {
+                    toggleTodo(todo.id);
+                });
+
+                const deleteButton = document.createElement("button");
+                deleteButton.type = "button";
+                deleteButton.className = "btn-icon";
+                deleteButton.textContent = "×";
+                deleteButton.setAttribute(
+                    "aria-label",
+                    `Delete ${todo.text}`
+                );
+                deleteButton.addEventListener("click", () => {
+                    deleteTodo(todo.id);
+                });
+
+                actions.append(toggleButton, deleteButton);
+                li.append(text, actions);
+                list.appendChild(li);
+            });
+
+            emptyState.hidden = appState.todos.length > 0;
+        }
+
+        // Todo form: supports both clicking Capture and pressing Enter
+        document.getElementById("todo-form").addEventListener(
+            "submit",
+            event => {
+                event.preventDefault();
+
+                const input = document.getElementById("todo-input");
+
+                addTodo(input.value);
+                input.value = "";
+                input.focus();
             }
+        );
+
+        // Notes: save as the user types
+        const notesInput = document.getElementById("notes-input");
+
+        notesInput.addEventListener("input", () => {
+            appState.notes = notesInput.value;
+            saveState();
         });
+
+        // Startup
+        loadState();
+
+        notesInput.value = appState.notes;
+        renderTodos();
     </script>
 </body>
 </html>
