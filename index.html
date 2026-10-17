@@ -284,6 +284,151 @@
                 min-height: 46px;
             }
         }
+
+                
+            /* Clickable MindSpace */
+            .brand-title {
+                margin-bottom: 8px;
+            }
+            
+            .brand-home {
+                font: inherit;
+                font-size: inherit;
+                font-weight: inherit;
+                letter-spacing: inherit;
+                color: inherit;
+                background: none;
+                border: none;
+                cursor: pointer;
+                text-align: left;
+            }
+            
+            .brand-home:hover {
+                opacity: 0.65;
+            }
+            
+            .brand-home:focus-visible {
+                outline: 2px solid var(--dark);
+                outline-offset: 4px;
+                border-radius: 3px;
+            }
+            
+            /* Homepage */
+            .home-content {
+                max-width: 850px;
+                width: 100%;
+                margin: auto;
+            }
+            
+            .home-eyebrow {
+                font-size: 0.75rem;
+                font-weight: 700;
+                letter-spacing: 2px;
+                opacity: 0.65;
+                margin-bottom: 20px;
+            }
+            
+            .home-content h1 {
+                font-size: clamp(2.5rem, 6vw, 4rem);
+                line-height: 1.12;
+                letter-spacing: -2px;
+                max-width: 650px;
+                margin-bottom: 20px;
+            }
+            
+            .home-content > .subtitle {
+                max-width: 570px;
+                font-size: 1.05rem;
+                margin-bottom: 42px;
+            }
+            
+            .home-cards {
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 18px;
+            }
+            
+            .home-card {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+                min-height: 230px;
+                padding: 26px;
+                border: 1px solid rgba(240, 238, 232, 0.35);
+                border-radius: 12px;
+                background: transparent;
+                color: var(--light);
+                cursor: pointer;
+                font: inherit;
+                transition: background-color 0.2s ease,
+                            color 0.2s ease,
+                            border-color 0.2s ease,
+                            transform 0.2s ease;
+            }
+            
+            .home-card:hover {
+                background-color: var(--light);
+                color: var(--dark);
+                border-color: var(--light);
+                transform: translateY(-3px);
+            }
+            
+            .home-card:focus-visible {
+                outline: 2px solid var(--light);
+                outline-offset: 4px;
+            }
+            
+            .home-card-icon {
+                font-size: 1.5rem;
+                margin-bottom: 24px;
+            }
+            
+            .home-card-title {
+                font-size: 1.3rem;
+                font-weight: 650;
+                margin-bottom: 10px;
+            }
+            
+            .home-card-description {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                opacity: 0.8;
+            }
+            
+            .home-card-link {
+                margin-top: auto;
+                padding-top: 24px;
+                font-size: 0.9rem;
+                font-weight: 600;
+            }
+            
+            .home-footer {
+                margin-top: 42px;
+                font-size: 0.9rem;
+                line-height: 1.6;
+                opacity: 0.65;
+            }
+            
+            @media (max-width: 700px) {
+                .home-content h1 {
+                    font-size: 2.5rem;
+                    letter-spacing: -1px;
+                }
+            
+                .home-cards {
+                    grid-template-columns: 1fr;
+                }
+            
+                .home-card {
+                    min-height: 200px;
+                }
+            
+                .home-footer {
+                    margin-top: 28px;
+                }
+            }
+
     </style>
 </head>
 
@@ -292,17 +437,73 @@
     <!-- Sidebar navigation -->
     <aside>
         <div class="brand">
-            <h2>MindSpace</h2>
+
+        <h2 class="brand-title">
+            <button
+                type="button"
+                class="brand-home"
+                data-view="home"
+                aria-label="Go to MindSpace homepage"
+            >
+                MindSpace
+            </button>
+        </h2>
             <p>A little space to think.</p>
 
             <nav aria-label="Main navigation">
+                
+<!-- Homepage view -->
+<section id="home-view" class="view">
+    <div class="home-content">
+        <p class="home-eyebrow">YOUR PERSONAL SPACE</p>
+
+        <h1>Welcome to MindSpace.</h1>
+
+        <p class="subtitle">
+            A little space to think. A place to unload your mind,
+            organise your thoughts, and focus on what matters.
+        </p>
+
+        <div class="home-cards">
+            <button
+                type="button"
+                class="home-card"
+                data-view="todo"
+            >
+                <span class="home-card-icon">✓</span>
+                <span class="home-card-title">To Do</span>
+                <span class="home-card-description">
+                    Capture tasks and clear your mental clutter.
+                </span>
+                <span class="home-card-link">Open tasks →</span>
+            </button>
+
+            <button
+                type="button"
+                class="home-card"
+                data-view="notes"
+            >
+                <span class="home-card-icon">✎</span>
+                <span class="home-card-title">Notes</span>
+                <span class="home-card-description">
+                    Write freely, reflect, and let your thoughts flow.
+                </span>
+                <span class="home-card-link">Open notes →</span>
+            </button>
+        </div>
+
+        <p class="home-footer">
+            You don't have to figure everything out at once.
+        </p>
+    </div>
+</section>
+
                 <ul class="nav-links">
                     <li>
                         <button
                             type="button"
-                            class="nav-item active"
-                            data-view="todo"
-                            aria-current="page"
+                           class="nav-item"
+data-view="todo"
                             style="width: 100%; text-align: left;"
                         >
                             <span>Todo</span>
@@ -326,7 +527,6 @@
     <!-- Main workspace -->
     <main>
         <!-- Todo view -->
-        <section id="todo-view" class="view active">
             <h1>To Do</h1>
             <p class="subtitle">
                 Externalise your mental clutter. Keep it out of your head.
@@ -362,7 +562,7 @@
             <textarea
                 id="notes-input"
                 class="notes-area"
-                placeholder="Start rambling here... Everything you write is instantly preserved."
+                placeholder="Start writing here"
                 aria-label="Your notes"
             ></textarea>
         </section>
@@ -455,6 +655,7 @@
 
             saveState();
             renderTodos();
+            switchView("home");
         }
 
         function toggleTodo(id) {
